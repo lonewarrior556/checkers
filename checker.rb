@@ -38,8 +38,9 @@ class Checker
 
   def next_jump
     #check if next jumps are possible
-    #list positions, as user to input next position
-    #make sure its in the possible ones
+    #list positions, ask user to input next position(chain is mandatory)
+    #make sure user input is in the possible ones
+    #next_pos
   end
 
   def move(pos)
