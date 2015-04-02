@@ -2,8 +2,10 @@ class Checker
 
   MOTIONS = [8,9,16,18,-8,-9,-16,-18]
 
-  DRAW = { [true, :black]=>♚, [true, :white] =>♔,
-      [false, :black] => ◉, [false, :white] => ◎}
+  KING_SPOT = { :black => [0,1,2,3], :white => [60,61,62,63]}
+
+  DRAW = { [true, :black]=>"♚", [true, :white] => "♔",
+      [false, :black] => "◉", [false, :white] => "◎"}
 
 
   attr_reader :color, :board
@@ -28,28 +30,29 @@ class Checker
 
     raise "illegal move" if !motions.map{|x|x + @value}.include?(pos)
 
-    raise "piece there" if !@board.tiles[pos].nil?
+    raise "piece there" if @board.tiles[pos] ==false
 
-    raise "no piece to jump" if (pos-value).abs > 10 && !@board.tiles[(pos-value)/2 + value].nil?
+    if (pos-value).abs > 10
+    raise "no piece to jump" if  @board.tiles[(pos-value)/2 + value] == false
+    raise "can't jump your own piece" if @board.tiles[(pos-value)/2 + value].color == color
+    end
 
     true
   end
 
 
   def move(pos)
-    @board.tiles[(pos-value)/2 + value] = nil if (pos-value).abs > 10
-    @board.tiles[value] = nil
+    @board.tiles[(pos-value)/2 + value] = false if (pos-value).abs > 10
+    @board.tiles[value] = false
     @value = pos
     @board.tiles[value] = self
+    @king = true if KING_SPOT[color].include?(pos)
   end
 
 
   def show
-    DRAW[king,color]
+    DRAW[[king,color]]
   end
-
-
-
 
 
 

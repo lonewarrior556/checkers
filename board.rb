@@ -1,4 +1,5 @@
 require_relative "checker"
+require 'byebug'
 
 class Board
 
@@ -9,20 +10,23 @@ class Board
 
 
   def initialize()
-    @tiles=set_board
+    @tiles = set_board
 
   end
 
+  attr_accessor :tiles
 
   def set_board
     temp_board = []
-    color = :white
     (0..63).to_a.each do |n|
-      color = :black if n>50
-      if LEGAL_POSITIONS.include?(n) && color ==:white
-        temp_board << Checker.new(color,n,self)
-      elsif LEGAL_POSITIONS.include?(n) && color ==:black
-        temp_board << Checker.new(color,n,self)
+      if LEGAL_POSITIONS.include?(n)
+        if n<13
+          temp_board << Checker.new(:white,n,self)
+        elsif n>50
+          temp_board << Checker.new(:black,n,self)
+        else
+          temp_board << false
+        end
       else
         temp_board << nil
       end
@@ -30,6 +34,31 @@ class Board
     temp_board
   end
 
+
+  
+
+#may still have errors
+  def display
+    temp = @tiles.compact.zip([nil]*32).flatten
+    temp_board = temp.each_slice(8).to_a
+    temp_board.reverse.each_with_index do |row, i|
+      str=''
+      if i%2==0
+        row = row.reverse
+      end
+      row.each do |spot|
+        if spot == false
+          str+="_"
+        elsif spot.nil?
+          str+="-"
+        else
+          str += spot.show
+        end
+      end
+      puts str
+    end
+    nil
+  end
 
 
 
