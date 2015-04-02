@@ -1,18 +1,18 @@
-class Piece
+class Checker
 
   attr_reader :color, :board
 
   attr_accessor :king, :position
 
 
-    def initialize(color, king, position, board)
+    def initialize(color, king, value, board)
       @color = color
       @king = false
-      @position = position
+      @value = position
       @board = board
     end
 
-    
+
 
 
 
