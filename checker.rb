@@ -4,13 +4,12 @@ class Checker
 
   KING_SPOT = { :black => [0,1,2,3], :white => [60,61,62,63]}
 
-  DRAW = { [true, :black]=>"♚", [true, :white] => "♔",
-      [false, :black] => "◉", [false, :white] => "◎"}
+  DRAW = { [true, :black]=>" ♚ ", [true, :white] => " ♔ ",
+      [false, :black] => " ◉ ", [false, :white] => " ◎ "}
 
 
   attr_reader :color, :board
-
-  attr_accessor :king, :position
+  attr_accessor :king, :value
 
 
   def initialize(color, value, board)
@@ -22,19 +21,19 @@ class Checker
 
 
   def legal?(pos)
+    raise "your not really moving..." if pos == value
+
     motions = MOTIONS[4..-1] if color == :black
     motions = MOTIONS[0..3]  if color == :white
     motions = MOTIONS if king
 
     raise "illegal square" if !Board::LEGAL_POSITIONS.include?(pos)
-
     raise "illegal move" if !motions.map{|x|x + @value}.include?(pos)
-
-    raise "piece there" if @board.tiles[pos] ==false
+    raise "piece there" if @board.tiles[pos] != false
 
     if (pos-value).abs > 10
-    raise "no piece to jump" if  @board.tiles[(pos-value)/2 + value] == false
-    raise "can't jump your own piece" if @board.tiles[(pos-value)/2 + value].color == color
+      raise "no piece to jump" if  @board.tiles[(pos-value)/2 + value] == false
+      raise "can't jump your own piece" if @board.tiles[(pos-value)/2 + value].color == color
     end
 
     true
@@ -53,10 +52,6 @@ class Checker
   def show
     DRAW[[king,color]]
   end
-
-
-
-
 
 
 end
