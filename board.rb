@@ -1,5 +1,4 @@
 require_relative "checker"
-require 'byebug'
 
 class Board
 
@@ -30,7 +29,6 @@ class Board
     end
     temp_board
   end
-
 
   def display
     temp=Array.new(8){Array.new(8)}

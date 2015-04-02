@@ -11,7 +11,6 @@ class Game
                           "a7" => 51, "c7" =>52, "e7" =>53, "g7" =>54,
                           "b8" => 60, "d8" =>61, "f8" =>62, "h8" =>63 }
 
-
   def initialize
     @game_board = Board.new
     @turn = :white
@@ -58,13 +57,8 @@ class Game
     end
     game_board.display
     end
-    puts "game is over"
-    if game_board.tiles.select{|tile| tile.color == @turn}.length > 0
-      puts "StaleMate!"
-    else
-      next_turn
-      puts "#{turn.to_s} wins!"
-    end
+
+    end_message
   end
 
   def game_over?
@@ -80,6 +74,16 @@ class Game
       end
     end
     true
+  end
+
+  def end_message
+    puts "game is over"
+    if game_board.tiles.select{|tile| tile.color == @turn}.length > 0
+      puts "StaleMate!"
+    else
+      next_turn
+      puts "#{turn.to_s} wins!"
+    end
   end
 
 end

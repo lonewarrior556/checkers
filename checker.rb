@@ -7,10 +7,8 @@ class Checker
   DRAW = { [true, :black]=>" ♚ ", [true, :white] => " ♔ ",
       [false, :black] => " ◉ ", [false, :white] => " ◎ "}
 
-
   attr_reader :color, :board
   attr_accessor :king, :value
-
 
   def initialize(color, value, board)
     @color = color
@@ -18,7 +16,6 @@ class Checker
     @value = value
     @board = board
   end
-
 
   def legal?(pos)
     raise "your not really moving..." if pos == value
@@ -39,18 +36,35 @@ class Checker
     true
   end
 
+  def next_jump
+    #check if next jumps are possible
+    #list positions, as user to input next position
+    #make sure its in the possible ones
+  end
 
   def move(pos)
-    @board.tiles[(pos-value)/2 + value] = false if (pos-value).abs > 10
+    distance = pos-value
+    @board.tiles[(distance)/2 + value] = false if (distance).abs > 10
     @board.tiles[value] = false
     @value = pos
     @board.tiles[value] = self
+    if distance >10
+      next_pos = next_jump
+      #move(next_pos)
+    end
+
     @king = true if KING_SPOT[color].include?(pos)
   end
 
-
   def show
     DRAW[[king,color]]
+  end
+
+  def ignore_exception
+     begin
+       yield
+     rescue Exception
+    end
   end
 
 
