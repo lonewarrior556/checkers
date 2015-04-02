@@ -9,7 +9,7 @@ class Board
 
 
   def initialize()
-    @tiles
+    @tiles=set_board
 
   end
 
@@ -27,6 +27,7 @@ class Board
         temp_board << nil
       end
     end
+    temp_board
   end
 
 
