@@ -1,1 +1,1 @@
-my own version of checkers, very simple code, board set up such that pieces move on a one dimentional array.
+My own version of checkers written in Ruby. Attempt at an extremely simplified code, board set up such that pieces move on a single dimentional array.
